@@ -5,6 +5,8 @@ import cn.mit.lib.SubFoo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.Map;
 
 @Component
@@ -28,6 +30,18 @@ public class Serv
         this.foo = foo;
         this.bar = bar;
         this.subFoo = subFoo;
+    }
+
+    @PostConstruct
+    public void init()
+    {
+        System.out.println("run in init @annotation");
+    }
+
+    @PreDestroy
+    public void destroy()
+    {
+        System.out.println("run in destroy @annotation");
     }
 
     public String getTestString()

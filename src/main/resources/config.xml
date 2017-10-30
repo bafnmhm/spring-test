@@ -9,12 +9,27 @@
 
     <context:component-scan base-package="cn.mit"/>
 
+    <bean name="mappings2"  class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:properties/config_a.properties</value>
+                <value>classpath:properties/config_b.properties</value>
+            </list>
+        </property>
+        <property name="properties">
+            <value>
+                jd.p1=_p1_
+                jd.p2=_p2_
+            </value>
+        </property>
+    </bean>
+
     <bean id="serv" class="cn.mit.service.Serv">
         <constructor-arg name="bar" value="abc"/>
         <property name="subFoo" ref="subFoo"/>
         <property name="p1" value="p1 value injected"/>
         <property name="p2" value="${jd.p2}"/>
-        <!--<property name="subFoo">
+<!--        <property name="subFoo">
             <idref bean="subFoo"/>
         </property>-->
         <property name="adminEmails">
@@ -22,6 +37,10 @@
                 <prop key="administrator">administrator@example.org</prop>
                 <prop key="support">support@example.org</prop>
                 <prop key="development">development@example.org</prop>
+                <prop key="detail">${config_example.a}</prop>
+                <prop key="detail2">${config_example.b}</prop>
+
+                <!--<prop key="detail2">${mappings.jd.p1}</prop>-->
             </props>
         </property>
     </bean>
@@ -34,12 +53,18 @@
 
     <bean id="subFoo" class="cn.mit.lib.SubFoo" factory-bean="foo" factory-method="createSubFooInstance"/>
 
-    <bean id="mappings" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="properties">
-            <value>
-                jd.p1=_p1_
-                jd.p2=_p2_
-            </value>
-        </property>
+    <bean id="myCommand" class="cn.mit.lib.Command" scope="prototype">
+        <!-- inject dependencies here as required -->
     </bean>
+
+    <bean id="commandManager" class="cn.mit.service.CommandManger">
+        <lookup-method name="createCommand" bean="myCommand"/>
+    </bean>
+
+    <bean id="commandMangerImp" class="cn.mit.service.CommandMangerImp" init-method="init">
+        <!-- inject dependencies here as required -->
+    </bean>
+
+    <bean class="cn.mit.service.InstantiationTracingBeanPostProcessor"/>
+
 </beans>

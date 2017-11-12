@@ -1,10 +1,12 @@
 package cn.mit;
 
+import cn.mit.lib.Bar;
 import cn.mit.lib.Command;
 import cn.mit.lib.Foo;
 import cn.mit.lib.SubFoo;
 import cn.mit.service.CommandManger;
 import cn.mit.service.CommandMangerImp;
+import cn.mit.service.PersonService;
 import cn.mit.service.Serv;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -34,6 +36,8 @@ public class App
         System.out.println(serv.getP1());
         System.out.println(serv.getP2());
         System.out.println(serv.getAdminEmails());
+
+        System.out.println(serv.saySimpleMovieLister());
     }
 
     public static void test2()
@@ -62,5 +66,19 @@ public class App
         System.out.println(command1);
         System.out.println(command2);
         System.out.println(command3);
+    }
+
+    public static void aspectTest()
+    {
+        ApplicationContext context = new ClassPathXmlApplicationContext("config.xml");
+        Bar bar = context.getBean(Bar.class);
+        System.out.println(bar.say("Hi!", "World!"));
+
+/*        PersonService personService = context.getBean(PersonService.class);
+        String personName = "Jim";
+        personService.addPerson(personName);
+        personService.deletePerson(personName);
+        personService.editPerson(personName);*/
+//        ((ClassPathXmlApplicationContext)context).close();
     }
 }

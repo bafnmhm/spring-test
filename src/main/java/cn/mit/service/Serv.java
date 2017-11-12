@@ -22,14 +22,17 @@ public class Serv
 
     private String p2;
 
+    private SimpleMovieLister simpleMovieLister;
+
     private Map<String, String> adminEmails;
 
     @Autowired
-    public Serv(Foo foo, String bar, SubFoo subFoo)
+    public Serv(Foo foo, String bar, SubFoo subFoo, SimpleMovieLister simpleMovieLister)
     {
         this.foo = foo;
         this.bar = bar;
         this.subFoo = subFoo;
+        this.simpleMovieLister = simpleMovieLister;
     }
 
     @PostConstruct
@@ -42,6 +45,11 @@ public class Serv
     public void destroy()
     {
         System.out.println("run in destroy @annotation");
+    }
+
+    public String saySimpleMovieLister()
+    {
+        return this.simpleMovieLister.say();
     }
 
     public String getTestString()
@@ -107,5 +115,15 @@ public class Serv
     public void setAdminEmails(Map<String, String> adminEmails)
     {
         this.adminEmails = adminEmails;
+    }
+
+    public SimpleMovieLister getSimpleMovieLister()
+    {
+        return simpleMovieLister;
+    }
+
+    public void setSimpleMovieLister(SimpleMovieLister simpleMovieLister)
+    {
+        this.simpleMovieLister = simpleMovieLister;
     }
 }

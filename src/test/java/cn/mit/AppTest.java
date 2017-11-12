@@ -41,4 +41,9 @@ public class AppTest
     {
         App.test2();
     }
+
+    public void testAspect()
+    {
+        App.aspectTest();
+    }
 }

@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                 http://www.springframework.org/schema/beans/spring-beans.xsd
                 http://www.springframework.org/schema/context
-                http://www.springframework.org/schema/context/spring-context.xsd">
+                http://www.springframework.org/schema/context/spring-context.xsd
+                http://www.springframework.org/schema/aop
+                http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <aop:aspectj-autoproxy/>
     <context:component-scan base-package="cn.mit"/>
 
-    <bean name="mappings2"  class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <bean name="mappings2" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:properties/config_a.properties</value>
@@ -29,9 +33,9 @@
         <property name="subFoo" ref="subFoo"/>
         <property name="p1" value="p1 value injected"/>
         <property name="p2" value="${jd.p2}"/>
-<!--        <property name="subFoo">
-            <idref bean="subFoo"/>
-        </property>-->
+        <!--        <property name="subFoo">
+                    <idref bean="subFoo"/>
+                </property>-->
         <property name="adminEmails">
             <props>
                 <prop key="administrator">administrator@example.org</prop>
@@ -39,6 +43,7 @@
                 <prop key="development">development@example.org</prop>
                 <prop key="detail">${config_example.a}</prop>
                 <prop key="detail2">${config_example.b}</prop>
+                <prop key="detail3">#{ T(java.lang.Math).random() * 100.0 }</prop>
 
                 <!--<prop key="detail2">${mappings.jd.p1}</prop>-->
             </props>
